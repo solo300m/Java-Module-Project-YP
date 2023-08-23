@@ -7,9 +7,7 @@ public class Main {
         System.out.println("На сколько персон необходимо поделить счет: ");
         Scanner scanner = new Scanner(System.in);
         int countPerson = 0;
-        // String nameProduct = "";
-        double price = 0.0;
-        String next = "";
+
         Calculator calc = null;
 
         countPerson = scanner.nextInt();
@@ -20,27 +18,8 @@ public class Main {
         }else {
             System.out.println("Вы планируете разделить счета на "+countPerson+" чел.");
             calc = new Calculator(countPerson);
-            while(!next.equals("завершить")){
-                System.out.println("Введите наименование товара: ");
-                System.out.print("-> ");
-                String tmp = scanner.next();
+            buildCheck(calc);
 
-                boolean check = false;
-                String strPrice = "";
-                while (!check) {
-                    System.out.print("-> ");
-                    strPrice = scanner.next();
-                    check = verifyDouble(strPrice);
-                    if(!check){
-                        System.out.println("Не правильный ввод. Поробуйте еще.");
-                    }
-                }
-                price = Double.parseDouble(strPrice);
-                Product product = new Product(tmp,price);
-                calc.add(new Product(tmp,price));
-                System.out.println("Добавить еще товар? Да: любой символ + Enter, Закончить ввод: Завершить + Enter");
-                next = (scanner.next().toLowerCase());
-            }
             System.out.println("Итоговый чек: ");
             calc.printCheck();
             System.out.println("К оплате итого: "+calc.sum()+" "+calc.rubRightWrite(calc.sum()));
@@ -48,6 +27,34 @@ public class Main {
         }
 
     }
+    public static void buildCheck(Calculator calc){
+        String next = "" ;
+        double price ;
+        Scanner scanner = new Scanner(System.in);
+        while(!next.equals("завершить")){
+            System.out.println("Введите наименование товара: ");
+            System.out.print("-> ");
+            String tmp = scanner.next();
+
+            boolean check = false;
+            String strPrice = "";
+            while (!check) {
+                System.out.println("Стоимость:");
+                System.out.print("-> ");
+                strPrice = scanner.next();
+                check = verifyDouble(strPrice);
+                if(!check){
+                    System.out.println("Не правильный ввод. Поробуйте еще.");
+                }
+            }
+            price = Double.parseDouble(strPrice);
+            calc.add(new Product(tmp,price));
+            System.out.println("Добавить еще товар? Да: любой символ + Enter, Закончить ввод: Завершить + Enter");
+            next = (scanner.next().toLowerCase());
+        }
+    }
+
+
     public static boolean verifyDouble(String str){
         boolean rez = false;
         char[] chArr = str.toCharArray();
@@ -57,17 +64,15 @@ public class Main {
                 rez = true;
             }else if(i == '.'){
                 countPoint++;
-            }else if(!Character.isDigit(i) && i != '.'){
+            }else{
                 rez = false;
                 return rez;
             }
         }
-        if(countPoint <= 1){
-            return rez;
-        }else{
+        if(countPoint > 1){
             rez = false;
-            return rez;
         }
+        return rez;
     }
 
 }

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator {
-    private List<Product>list = new ArrayList<Product>();
+    private final List<Product>list = new ArrayList<>();
     private int person = 0;
     Calculator(int person){
         this.person = person;
