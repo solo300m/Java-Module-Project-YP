@@ -10,9 +10,9 @@ public class Main {
 
         Calculator calc = null;
 
-        countPerson = scanner.nextInt();
+        countPerson = scanner.hasNextInt() ? scanner.nextInt() : 0;
         if (countPerson <= 0){
-            System.out.println("Количество человек не может быть отрицательным или равным нулю!");
+            System.out.println("Количество человек не может быть отрицательным или равным нулю! Либо введено слишком большое число!");
         }else if(countPerson == 1){
             System.out.println("Нет смысла в работе программы при количестве персон равном 0");
         }else {
